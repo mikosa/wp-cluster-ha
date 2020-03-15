@@ -27,7 +27,7 @@ jobs:
       run: helm init --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --upgrade 
     
     - name: Helm service account 
-      run: kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+      run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
     
     - name: install operators
       run: helm install $GITHUB_WORKSPACE/charts/mysql-operator/ --name mysql-operator --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig

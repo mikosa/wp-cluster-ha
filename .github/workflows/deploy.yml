@@ -27,7 +27,7 @@ jobs:
       run: helm init --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --upgrade 
     
     - name: Helm service account 
-      run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig reconcile clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+      run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig reconcile clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller 2>&1
     
     - name: create ns 
       run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig create  ns mysql

@@ -26,7 +26,8 @@ jobs:
     - name: Helm init 
       run: helm init --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --upgrade 
     
-    - name: Helm service account 
+    - if: succeeded() || failed()
+      name: Helm service account 
       run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller 2> dev/null
     
     - name: create ns 

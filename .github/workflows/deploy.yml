@@ -33,6 +33,7 @@ jobs:
       run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig create  ns mysql
     
     - name: install operators
+      if: failure() || success()
       run: helm install $GITHUB_WORKSPACE/charts/mysql-operator/ --name mysql-operator --namespace mysql --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig
        
 #     - name: Deploy to DigitalOcean Kubernetes

@@ -35,7 +35,7 @@ jobs:
         set +e
         helm install $GITHUB_WORKSPACE/charts/mysql-operator/ --name mysql-operator --namespace mysql --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig 2>1
         helm install $GITHUB_WORKSPACE/charts/wordpress-operator/ --name wp-operator --namespace mysql --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig 2>1
-        helm list --all
+        helm list --all --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig
 
 #     - name: Verify deployment
 #       run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig rollout status deployment/static-example

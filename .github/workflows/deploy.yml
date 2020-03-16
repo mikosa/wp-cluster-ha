@@ -25,19 +25,16 @@ jobs:
 
     - name: Helm init 
       run: helm init --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --upgrade 
-    
-    # - name: Helm service account 
-    #   run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller 2> dev/null
-    
+
     - name: Pre-install 
       run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig apply -f $GITHUB_WORKSPACE/yamfiles/
     
     - name: install operators
       if: failure() || success()
-      run: helm install $GITHUB_WORKSPACE/charts/mysql-operator/ --name mysql-operator --namespace mysql --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig
-       
-#     - name: Deploy to DigitalOcean Kubernetes
-#       run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig apply -f $GITHUB_WORKSPACE/config/deployment.yml
-
+      run: |
+        helm install $GITHUB_WORKSPACE/charts/mysql-operator/ --name mysql-operator --namespace mysql --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig
+        helm install $GITHUB_WORKSPACE/charts/wordpress-operator/ --name wp-operator --namespace mysql --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig
+        helm list --all
+        
 #     - name: Verify deployment
 #       run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig rollout status deployment/static-example
